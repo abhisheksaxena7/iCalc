@@ -40,30 +40,32 @@ class ViewController: UIViewController
         }
         switch operation
         {
-              case "✕" : performOperation(multiply) //passing a function as an argument
-            
-//            case "÷":
-//            
-//            case "+":
-//            
-//            case "−":
-            
-            default: break
+        case "✕" : performOperation { $0 * $1 } //Closures
+        case "÷" : performOperation { $1 / $0 }
+        case "+" : performOperation { $0 + $1 }
+        case "−" : performOperation { $1 - $0 }
+        case "√" : performOperation { sqrt($0) }
+        default: break
         }
     }
     
-    func performOperation(operation: (Double,Double) ->Double)      //receives function multiply as an argument called operation
+    func performOperation(operation: (Double,Double) ->Double)      //receives a closure function as an argument called operation
     {
         if operandStack.count>=2
         {
-            displayValue = operation(operandStack.removeLast(),operandStack.removeLast())      //calls multiply function
+            displayValue = operation(operandStack.removeLast(),operandStack.removeLast())      //calls operation function
             enter()
         }
     }
     
-    func multiply(o1: Double,o2: Double) -> Double
+    @nonobjc    //since objective c doesn't support method overloading and swift does. Inheriting from UIViewController makes Obj-C compiler to bug this code. So adding this attribute it lets it pass.
+    func performOperation(operation: Double -> Double)
     {
-        return o1*o2
+        if operandStack.count>=1
+        {
+            displayValue = operation(operandStack.removeLast())      //calls operation function
+            enter()
+        }
     }
     
     var operandStack = Array<Double>()  //Stack to store all the operands
