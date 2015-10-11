@@ -40,33 +40,32 @@ class ViewController: UIViewController
         }
         switch operation
         {
-            case "✕" :
-                    if operandStack.count>=2
-                    {
-                        displayValue = (operandStack.removeLast() * operandStack.removeLast())
-                        enter()
-                    }
-            case "÷":
-                if operandStack.count>=2
-                {
-                    displayValue = (operandStack.removeLast() / operandStack.removeLast())
-                    enter()
-                }
-            case "+":
-                if operandStack.count>=2
-                {
-                    displayValue = (operandStack.removeLast() + operandStack.removeLast())
-                    enter()
-                }
-            case "−":
-                if operandStack.count>=2
-                {
-                    displayValue = (operandStack.removeLast() - operandStack.removeLast())
-                    enter()
-                }
+              case "✕" : performOperation(multiply) //passing a function as an argument
+            
+//            case "÷":
+//            
+//            case "+":
+//            
+//            case "−":
+            
             default: break
         }
     }
+    
+    func performOperation(operation: (Double,Double) ->Double)      //receives function multiply as an argument called operation
+    {
+        if operandStack.count>=2
+        {
+            displayValue = operation(operandStack.removeLast(),operandStack.removeLast())      //calls multiply function
+            enter()
+        }
+    }
+    
+    func multiply(o1: Double,o2: Double) -> Double
+    {
+        return o1*o2
+    }
+    
     var operandStack = Array<Double>()  //Stack to store all the operands
     
     @IBAction func enter()  //Handling events when enter key is pressed
