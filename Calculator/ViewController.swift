@@ -31,6 +31,7 @@ class ViewController: UIViewController
         
     }
     
+    //Controller part begin
     @IBAction func operate(sender: UIButton)    //Handling operators and calculations
     {
         let operation = sender.currentTitle!
@@ -67,6 +68,7 @@ class ViewController: UIViewController
             enter()
         }
     }
+    //Controller part end
     
     var operandStack = Array<Double>()  //Stack to store all the operands
     
